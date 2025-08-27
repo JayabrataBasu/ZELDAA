@@ -1,4 +1,5 @@
 import pygame
+import os
 from settings import * 
 
 class UI:
@@ -6,7 +7,8 @@ class UI:
 		
 		# general 
 		self.display_surface = pygame.display.get_surface()
-		self.font = pygame.font.Font(UI_FONT,UI_FONT_SIZE)
+		font_path = os.path.join(os.path.dirname(__file__), '..', UI_FONT.replace('../', '').replace('..\\', ''))
+		self.font = pygame.font.Font(font_path, UI_FONT_SIZE)
 
 		# bar setup 
 		self.health_bar_rect = pygame.Rect(10,10,HEALTH_BAR_WIDTH,BAR_HEIGHT)
@@ -15,14 +17,15 @@ class UI:
 		# convert weapon dictionary
 		self.weapon_graphics = []
 		for weapon in weapon_data.values():
-			path = weapon['graphic']
+			path = os.path.join(os.path.dirname(__file__), '..', weapon['graphic'].replace('../', '').replace('..\\', ''))
 			weapon = pygame.image.load(path).convert_alpha()
 			self.weapon_graphics.append(weapon)
 
 		# convert magic dictionary
 		self.magic_graphics = []
 		for magic in magic_data.values():
-			magic = pygame.image.load(magic['graphic']).convert_alpha()
+			magic_path = os.path.join(os.path.dirname(__file__), '..', magic['graphic'].replace('../', '').replace('..\\', ''))
+			magic = pygame.image.load(magic_path).convert_alpha()
 			self.magic_graphics.append(magic)
 
 

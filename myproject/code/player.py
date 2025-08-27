@@ -1,4 +1,5 @@
-import pygame 
+import pygame
+import os
 from settings import *
 from support import import_folder
 from entity import Entity
@@ -6,7 +7,8 @@ from entity import Entity
 class Player(Entity):
 	def __init__(self,pos,groups,obstacle_sprites,create_attack,destroy_attack,create_magic):
 		super().__init__(groups)
-		self.image = pygame.image.load('../graphics/test/player.png').convert_alpha()
+		player_img_path = os.path.join(os.path.dirname(__file__), '..', 'graphics', 'test', 'player.png')
+		self.image = pygame.image.load(player_img_path).convert_alpha()
 		self.rect = self.image.get_rect(topleft = pos)
 		self.hitbox = self.rect.inflate(-6,HITBOX_OFFSET['player'])
 
@@ -51,17 +53,18 @@ class Player(Entity):
 		self.invulnerability_duration = 500
 
 		# import a sound
-		self.weapon_attack_sound = pygame.mixer.Sound('../audio/sword.wav')
+		weapon_sound_path = os.path.join(os.path.dirname(__file__), '..', 'audio', 'sword.wav')
+		self.weapon_attack_sound = pygame.mixer.Sound(weapon_sound_path)
 		self.weapon_attack_sound.set_volume(0.4)
 
 	def import_player_assets(self):
-		character_path = '../graphics/player/'
+		character_path = os.path.join(os.path.dirname(__file__), '..', 'graphics', 'player')
 		self.animations = {'up': [],'down': [],'left': [],'right': [],
 			'right_idle':[],'left_idle':[],'up_idle':[],'down_idle':[],
 			'right_attack':[],'left_attack':[],'up_attack':[],'down_attack':[]}
 
 		for animation in self.animations.keys():
-			full_path = character_path + animation
+			full_path = os.path.join(character_path, animation)
 			self.animations[animation] = import_folder(full_path)
 
 	def input(self):

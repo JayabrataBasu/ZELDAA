@@ -1,4 +1,5 @@
 import pygame
+import os
 from settings import *
 
 class Upgrade:
@@ -10,7 +11,8 @@ class Upgrade:
 		self.attribute_nr = len(player.stats)
 		self.attribute_names = list(player.stats.keys())
 		self.max_values = list(player.max_stats.values())
-		self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE)
+		font_path = os.path.join(os.path.dirname(__file__), '..', UI_FONT.replace('../', '').replace('..\\', ''))
+		self.font = pygame.font.Font(font_path, UI_FONT_SIZE)
 
 		# item creation
 		self.height = self.display_surface.get_size()[1] * 0.8
